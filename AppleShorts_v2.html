@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101010">
+<title>苹果短剧 · 每一集都有新故事</title>
+<style>
+:root{--bg:#101010;--panel:#191919;--panel2:#222;--text:#f5f5f5;--muted:#999;--red:#ff3b30;--gold:#ffca68}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,"Microsoft YaHei",sans-serif}
+button,input{font:inherit}button{cursor:pointer;border:0}
+.topbar{height:66px;display:flex;align-items:center;gap:34px;padding:0 5.5%;position:sticky;top:0;z-index:20;background:rgba(15,15,15,.94);backdrop-filter:blur(14px);border-bottom:1px solid #ffffff10}
+.logo{font-size:25px;font-weight:900;letter-spacing:-1px;white-space:nowrap}.logo span{color:var(--red)}
+.nav{display:flex;gap:25px;color:#bbb;font-size:14px}.nav a{color:inherit;text-decoration:none}.nav a.active,.nav a:hover{color:#fff}
+.top-actions{margin-left:auto;display:flex;align-items:center;gap:12px}.search{width:min(240px,28vw);background:#242424;border:1px solid #333;border-radius:22px;padding:10px 15px;color:white;outline:none}.search:focus{border-color:#777}
+.ghost{background:#242424;color:#ddd;border:1px solid #383838;border-radius:20px;padding:9px 14px;font-size:12px}
+main{max-width:1440px;margin:auto;padding:0 5.5% 70px}
+.hero{margin:25px 0 38px;min-height:360px;border-radius:22px;overflow:hidden;position:relative;background:linear-gradient(90deg,#171014 0%,#34131b 48%,#171014 100%);display:flex;align-items:center}
+.hero:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 75% 50%,#d44b3b55,transparent 42%),linear-gradient(90deg,#111 0%,transparent 75%)}
+.hero-art{position:absolute;right:7%;top:0;height:100%;width:42%;display:flex;align-items:center;justify-content:center;font-size:clamp(100px,18vw,230px);filter:drop-shadow(0 18px 35px #0009);opacity:.9}
+.hero-copy{position:relative;z-index:1;padding:42px 5%;max-width:620px}.eyebrow{color:var(--gold);font-size:12px;letter-spacing:3px;font-weight:bold}.hero h1{font-size:clamp(30px,4vw,48px);margin:15px 0 12px;line-height:1.15}.hero p{color:#c7bfc0;line-height:1.8;font-size:14px;max-width:470px}.meta{font-size:12px;color:#aaa;margin:18px 0}.pill{display:inline-block;padding:5px 9px;border-radius:4px;background:#ffffff18;margin-right:6px;color:#eee}
+.primary{background:var(--red);color:white;border-radius:22px;padding:12px 23px;font-weight:bold}.primary:hover{background:#e82b22}
+.section-head{display:flex;align-items:end;justify-content:space-between;margin:34px 0 17px}.section-head h2{font-size:21px;margin:0}.section-head small{color:var(--muted)}
+.category-row{display:flex;gap:10px;overflow:auto;padding-bottom:8px}.category{background:#222;color:#bbb;border:1px solid #333;border-radius:20px;padding:9px 17px;white-space:nowrap;font-size:13px}.category.active,.category:hover{background:#fff;color:#111;border-color:#fff}
+.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:22px 15px}
+.card{min-width:0;cursor:pointer}.poster{aspect-ratio:3/4;border-radius:10px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#512b32,#17151e 65%);box-shadow:0 8px 20px #0004}.poster .poster-symbol{font-size:clamp(42px,6vw,82px);filter:drop-shadow(0 8px 12px #0008)}.poster:after{content:"";position:absolute;inset:45% 0 0;background:linear-gradient(transparent,#0009)}.poster-tag{position:absolute;top:9px;left:9px;z-index:1;background:#e6372e;color:white;padding:4px 7px;border-radius:4px;font-size:10px}.poster-count{position:absolute;bottom:9px;right:9px;z-index:1;font-size:11px;color:#fff}.card h3{font-size:14px;margin:10px 0 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.card p{font-size:12px;color:#888;margin:0}
+.empty{padding:45px 15px;text-align:center;color:#888;border:1px dashed #393939;border-radius:12px;grid-column:1/-1}
+footer{border-top:1px solid #292929;color:#777;text-align:center;padding:25px 10px;font-size:12px}
+.modal{position:fixed;inset:0;background:#000b;z-index:50;display:none;align-items:center;justify-content:center;padding:18px}.modal.show{display:flex}.dialog{background:#191919;border:1px solid #383838;border-radius:16px;width:min(760px,100%);max-height:90vh;overflow:auto;position:relative}.close{position:absolute;right:14px;top:12px;background:#333;color:#fff;border-radius:50%;width:32px;height:32px;font-size:18px;z-index:2}.detail{display:grid;grid-template-columns:220px 1fr;gap:24px;padding:28px}.detail-poster{border-radius:10px;min-height:280px;display:grid;place-items:center;font-size:90px;background:linear-gradient(145deg,#6d3038,#17151e)}.detail h2{margin:4px 0 10px}.detail p{color:#aaa;line-height:1.8;font-size:13px}.episode-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}.episode{background:#2b2b2b;color:#ddd;padding:9px 13px;border-radius:7px}.episode:hover,.episode.selected{background:var(--red);color:white}.player-wrap{padding:0 28px 28px}.player{width:100%;aspect-ratio:16/9;background:#050505;border-radius:10px;display:grid;place-items:center;color:#888;overflow:hidden}.player video{width:100%;height:100%;object-fit:contain}.player-note{font-size:12px;color:#777;margin-top:9px}
+.settings{padding:28px}.settings h2{margin-top:0}.settings p{color:#aaa;font-size:13px;line-height:1.7}.url-row{display:flex;gap:8px;margin:16px 0}.url-row input{flex:1;min-width:0;background:#252525;border:1px solid #444;border-radius:8px;padding:12px;color:#fff;outline:none}.hint{background:#111;border:1px solid #333;border-radius:8px;padding:13px;color:#aaa;font-size:12px;line-height:1.7;white-space:pre-wrap;overflow:auto}.status{font-size:12px;color:var(--gold);min-height:18px}
+@media(max-width:900px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}.nav{gap:14px}.hero{min-height:320px}}
+@media(max-width:650px){.topbar{height:auto;min-height:60px;padding:12px 4%;gap:12px;flex-wrap:wrap}.logo{font-size:22px}.nav{order:3;width:100%;overflow:auto;padding:4px 0}.top-actions{gap:7px}.search{width:125px;padding:8px 11px}.ghost{padding:8px 10px}.hero{margin-top:15px;min-height:330px}.hero-art{right:-5%;width:55%;opacity:.45}.hero-copy{padding:30px 7%}.hero p{max-width:90%}main{padding:0 4% 50px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 12px}.poster .poster-symbol{font-size:72px}.detail{grid-template-columns:100px 1fr;gap:15px;padding:22px 17px}.detail-poster{min-height:145px;font-size:50px}.player-wrap{padding:0 17px 20px}.url-row{flex-direction:column}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="logo">苹果<span>短剧</span></div>
+  <nav class="nav"><a class="active" href="#home">首页</a><a href="#library">短剧库</a><a href="#categories">分类</a></nav>
+  <div class="top-actions">
+    <input id="searchInput" class="search" placeholder="搜索短剧..." aria-label="搜索短剧">
+  </div>
+</header>
+<main id="home">
+  <section class="hero" id="hero">
+    <div class="hero-art" id="heroArt">🍎</div>
+    <div class="hero-copy">
+      <div class="eyebrow">APPLE SHORTS · 精选短剧</div>
+      <h1 id="heroTitle">正在加载短剧…</h1>
+      <div class="meta" id="heroMeta"></div>
+      <p id="heroDesc">从短剧库发现下一段精彩故事。</p>
+      <button class="primary" id="heroPlay">▶ 立即观看</button>
+    </div>
+  </section>
+
+  <section id="categories">
+    <div class="section-head"><h2>精选分类</h2><small>选择你喜欢的故事类型</small></div>
+    <div class="category-row" id="categoryRow">
+      <button class="category active" data-category="全部">全部</button>
+      <button class="category" data-category="都市">都市</button>
+      <button class="category" data-category="爱情">爱情</button>
+      <button class="category" data-category="悬疑">悬疑</button>
+      <button class="category" data-category="逆袭">逆袭</button>
+      <button class="category" data-category="古装">古装</button>
+    </div>
+  </section>
+
+  <section id="library">
+    <div class="section-head"><h2>全部短剧</h2><small id="countText">共 1 部短剧</small></div>
+    <div class="grid" id="dramaGrid"></div>
+  </section>
+</main>
+<footer>苹果短剧 · 仅用于个人学习与展示。短剧目录由开发者统一维护。</footer>
+
+<div class="modal" id="detailModal">
+  <div class="dialog">
+    <button class="close" data-close="detailModal">×</button>
+    <div class="detail">
+      <div class="detail-poster" id="detailPoster">🍎</div>
+      <div>
+        <div class="eyebrow">SHORT DRAMA</div><h2 id="detailTitle"></h2>
+        <div class="meta" id="detailMeta"></div>
+        <p id="detailDesc"></p>
+        <strong>选集</strong><div class="episode-list" id="episodeList"></div>
+      </div>
+    </div>
+    <div class="player-wrap"><div class="player" id="player"><span>选择剧集开始播放</span></div><div class="player-note" id="playerNote">如果没有配置视频地址，这里会显示播放提示。</div></div>
+  </div>
+</div>
+
+<script>
+// 开发者配置：将 GitHub dramas.json 文件的 Raw URL 填入此处。
+// 普通访问者无法在网页中修改短剧目录；新增或修改短剧由开发者维护 GitHub JSON。
+const DEFAULT_GITHUB_INDEX_URL = "https://raw.githubusercontent.com/XYZ-club/Apple_Shorts/main/dramas.json";
+
+// HTML 内置的第一部示例短剧。GitHub 目录读取失败或未配置 URL 时，显示这份内置数据。
+const BUILT_IN_DRAMAS = [
+  {
+    id: "apple-demo-001",
+    title: "重启人生：她不再退让",
+    category: "都市",
+    tags: ["逆袭", "成长"],
+    episodes: 12,
+    description: "一次意外的转折，让她重新审视曾经的选择。这一次，她决定掌握自己的人生。故事、人物与剧集信息均为演示内容，可在 GitHub JSON 中替换。",
+    cover: "",
+    icon: "🌆",
+    videoUrls: []
+  }
+];
+
+let dramas = [...BUILT_IN_DRAMAS];
+let activeCategory = "全部";
+let currentDrama = null;
+let currentEpisode = 1;
+
+const $ = id => document.getElementById(id);
+const escapeHTML = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function dramaIcon(drama){return drama.icon || "🎬";}
+function posterStyle(drama){
+  if(drama.cover) return `background-image:linear-gradient(0deg,#0008,transparent 55%),url("${String(drama.cover).replace(/"/g,"%22")}");background-size:cover;background-position:center`;
+  return "";
+}
+function visibleDramas(){
+  const q = $("searchInput").value.trim().toLowerCase();
+  return dramas.filter(d => (activeCategory==="全部" || d.category===activeCategory) &&
+    (!q || `${d.title} ${d.category} ${(d.tags||[]).join(" ")} ${d.description||""}`.toLowerCase().includes(q)));
+}
+function render(){
+  const list = visibleDramas();
+  $("countText").textContent = `共 ${dramas.length} 部短剧 · 当前显示 ${list.length} 部`;
+  $("dramaGrid").innerHTML = list.length ? list.map(d => `
+    <article class="card" data-id="${escapeHTML(d.id)}">
+      <div class="poster" style="${posterStyle(d)}">
+        <span class="poster-tag">${escapeHTML(d.category||"短剧")}</span>
+        ${d.cover ? "" : `<span class="poster-symbol">${escapeHTML(dramaIcon(d))}</span>`}
+        <span class="poster-count">${Number(d.episodes)||0} 集</span>
+      </div>
+      <h3>${escapeHTML(d.title)}</h3><p>${escapeHTML((d.tags||[]).join(" · ") || "精彩短剧")}</p>
+    </article>`).join("") : `<div class="empty">没有找到相关短剧</div>`;
+  document.querySelectorAll(".card").forEach(card => card.addEventListener("click",()=>openDrama(card.dataset.id)));
+  const featured = dramas[0];
+  if(featured){
+    $("heroTitle").textContent = featured.title;
+    $("heroMeta").innerHTML = `<span class="pill">${escapeHTML(featured.category||"短剧")}</span><span>${Number(featured.episodes)||0} 集</span>`;
+    $("heroDesc").textContent = featured.description || "发现精彩故事。";
+    $("heroArt").textContent = dramaIcon(featured);
+    $("heroArt").style.backgroundImage = featured.cover ? `url("${featured.cover}")` : "";
+    $("heroPlay").onclick = () => openDrama(featured.id);
+  }else{
+    $("heroTitle").textContent="发现你的下一部短剧";$("heroMeta").textContent="";$("heroDesc").textContent="短剧目录暂时为空。";$("heroPlay").onclick=null;
+  }
+}
+function openDrama(id){
+  const d = dramas.find(x=>String(x.id)===String(id)); if(!d)return;
+  currentDrama=d;currentEpisode=1;
+  $("detailTitle").textContent=d.title;
+  $("detailMeta").innerHTML=`<span class="pill">${escapeHTML(d.category||"短剧")}</span>${Number(d.episodes)||0} 集`;
+  $("detailDesc").textContent=d.description||"暂无简介。";
+  $("detailPoster").textContent=dramaIcon(d);
+  $("detailPoster").style.backgroundImage=d.cover?`linear-gradient(#0003,#0003),url("${d.cover}")`:"";
+  $("detailPoster").style.backgroundSize="cover";
+  const total=Math.max(1,Number(d.episodes)||1);
+  $("episodeList").innerHTML=Array.from({length:total},(_,i)=>`<button class="episode ${i===0?"selected":""}" data-episode="${i+1}">第 ${i+1} 集</button>`).join("");
+  document.querySelectorAll(".episode").forEach(b=>b.addEventListener("click",()=>playEpisode(Number(b.dataset.episode))));
+  playEpisode(1);$("detailModal").classList.add("show");
+}
+function playEpisode(n){
+  if(!currentDrama)return;currentEpisode=n;
+  document.querySelectorAll(".episode").forEach(b=>b.classList.toggle("selected",Number(b.dataset.episode)===n));
+  const url=currentDrama.videoUrls?.[n-1];
+  if(url){
+    $("player").innerHTML=`<video controls playsinline preload="metadata" src="${escapeHTML(url)}">你的浏览器不支持视频播放。</video>`;
+    $("playerNote").textContent=`正在播放：${currentDrama.title} · 第 ${n} 集`;
+  }else{
+    $("player").innerHTML=`<div style="text-align:center;padding:20px"><div style="font-size:42px;margin-bottom:10px">▶</div><div>第 ${n} 集尚未配置视频</div></div>`;
+    $("playerNote").textContent="请在 GitHub dramas.json 对应短剧的 videoUrls 数组中填写这一集的 MP4 直链。";
+  }
+}
+async function loadCatalog(url){
+  try{
+    const response=await fetch(url,{cache:"no-store"});
+    if(!response.ok)throw new Error(`HTTP ${response.status}`);
+    const data=await response.json();
+    const items=Array.isArray(data)?data:data.dramas;
+    if(!Array.isArray(items))throw new Error("JSON 中找不到 dramas 数组");
+    dramas=items.filter(x=>x && x.title);
+    if(!dramas.length)throw new Error("目录中没有有效短剧");
+    render();return true;
+  }catch(err){
+    dramas=[...BUILT_IN_DRAMAS];render();
+    console.warn("GitHub 短剧目录读取失败，已使用内置目录：", err);
+    return false;
+  }
+}
+document.querySelectorAll(".category").forEach(btn=>btn.addEventListener("click",()=>{
+  document.querySelectorAll(".category").forEach(x=>x.classList.remove("active"));
+  btn.classList.add("active");activeCategory=btn.dataset.category;render();
+}));
+$("searchInput").addEventListener("input",render);
+document.querySelectorAll("[data-close]").forEach(btn=>btn.addEventListener("click",()=>$(btn.dataset.close).classList.remove("show")));
+document.querySelectorAll(".modal").forEach(m=>m.addEventListener("click",e=>{if(e.target===m)m.classList.remove("show")}));
+(async()=>{
+  if(DEFAULT_GITHUB_INDEX_URL) await loadCatalog(DEFAULT_GITHUB_INDEX_URL);
+  else render();
+})();
+</script>
+</body>
+</html>
