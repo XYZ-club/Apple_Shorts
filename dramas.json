@@ -1,0 +1,17 @@
+{
+  "dramas": [
+    {
+      "id": "drama001",
+      "title": "重启人生：她不再退让",
+      "category": "都市",
+      "tags": ["逆袭", "成长"],
+      "episodes": 1,
+      "description": "一次意外让她重新选择人生。",
+      "cover": "https://你的图片地址.jpg",
+      "icon": "🌆",
+      "videoUrls": [
+        "https://youtu.be/NhbrzTFYtPU?si=cNzPZDPHrDMkMAEF"
+      ]
+    }
+  ]
+}
